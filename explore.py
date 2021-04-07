@@ -8,4 +8,4 @@ inputs = RedShiftInputs('redshift-cluster-1', 'dev', 'awsuser', 20)
 # print(inputs.Database)
 # print(RedShiftData().execute_query())
 
-print(S3Data().objects_list())
+print(S3Data().buckets_list())

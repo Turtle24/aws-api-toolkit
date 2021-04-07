@@ -20,7 +20,7 @@ class S3Data:
             list: A list of all the bucket names are returned.
         """
         response = self.client.list_buckets()
-        return [dicts['name'] for dicts in response['Tables']]
+        return [dicts['Name'] for dicts in response['Buckets']]
 
     def objects_list(self):
         """ A method that lists the objects in the S3 bucket. Parameters can be used for added granularity. 
