@@ -27,8 +27,8 @@ class RedShiftData:
         )
         return [dicts['name'] for dicts in response['Tables']]
 
-    # pass a listed table
-    def describe_tables(self):
+    
+    def describe_tables(self, table):
         """ A method that describes the given table passed to it.
 
         Returns:
@@ -39,8 +39,9 @@ class RedShiftData:
             Database='dev',
             DbUser='awsuser',
             MaxResults=20,
+            Table=table
         )
-        return json.dumps(response, indent=2, default=str)
+        return [dicts['name'] for dicts in response['ColumnList']]
 
     # identify granualirity of queries
     def execute_query(self):

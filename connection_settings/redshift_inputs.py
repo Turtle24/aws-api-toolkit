@@ -7,6 +7,7 @@ class RedShiftInputs:
     Database: str
     DbUser: str
     MaxResults: int
+    Table=str
 
 @dataclass
 class RedShiftSQL(RedShiftInputs):
