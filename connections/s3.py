@@ -4,7 +4,8 @@ import json
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
 class S3Data:
-
+    """ A class that represents the S3 api connection.
+    """
     def __init__(self):
         self.client = boto3.client(
                 's3',
@@ -13,10 +14,22 @@ class S3Data:
         )
 
     def buckets_list(self):
+        """ A method that returns the list of buckets in S3.
+
+        Returns:
+            list: A list of all the bucket names are returned.
+        """
         response = self.client.list_buckets()
-        return json.dumps(response, indent=2, default=str)
+        return [dicts['name'] for dicts in response['Tables']]
 
     def objects_list(self):
+        """ A method that lists the objects in the S3 bucket. Parameters can be used for added granularity. 
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_objects_v2
+
+
+        Returns:
+            json: A json string is returned representing the objects in the S3 bucket.
+        """
         response = self.client.list_objects_v2(
             Bucket='exploration-bucket',
             EncodingType='url',
