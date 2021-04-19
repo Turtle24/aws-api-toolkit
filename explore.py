@@ -15,9 +15,8 @@ from connections.rds import RDSClient, RDSData
 # # table_columns = [dicts['name'] for dicts in table_description['ColumnList']]
 # print(table_description)
 
-# print(RDSClient().account_attributes())
+print(RDSClient().db_instances())
 
-print(RDSData().sql_statement())
 
 if __name__ == '__main__':
     print('main')
