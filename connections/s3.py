@@ -3,6 +3,7 @@ import json
 
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
+
 class S3Data:
     """ A class that represents the S3 api connection.
     """
@@ -37,3 +38,19 @@ class S3Data:
             FetchOwner=True,
         )
         return json.dumps(response['Contents'], indent=2, default=str)
+
+
+class S3Control:
+    def __init__(self):
+        self.client = boto3.client(
+                's3control',
+                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=AWS_SECRET_KEY,
+        )
+
+    def bucket_get(self):
+        response = self.client.get_bucket(
+            AccountId='937543116659',
+            Bucket='exploration-bucket'
+            )
+        return json.dumps(response, indent=2, default=str)
