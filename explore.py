@@ -1,12 +1,13 @@
 from connections.s3 import S3Data
 import pathlib
+import json
 
 s3 = S3Data()
 
 filepath = pathlib.Path.home() / 'Downloads' / 'orders.csv'
 object_name = 'Customer_Orders_2020'
 buckets = s3.buckets_list()
-
+print(buckets)
 
 def s3_object_upload_demo(s3, filepath, object_name, s3_bucket):
     # Client selects bucket
@@ -19,4 +20,8 @@ def s3_object_upload_demo(s3, filepath, object_name, s3_bucket):
     return f"Successful upload of {object_name} to {selected_bucket}"
 
 
-print(s3_object_upload_demo(s3, filepath, object_name, buckets))
+def object_delete_demo():
+    s3.object_delete(buckets[0], object_name)
+
+
+print(object_delete_demo())

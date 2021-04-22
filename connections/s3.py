@@ -13,6 +13,11 @@ class S3Data:
                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=AWS_SECRET_KEY,
         )
+        self.resource = boto3.resource(
+                's3',
+                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=AWS_SECRET_KEY,
+        )
 
     def buckets_list(self):
         """ A method that returns the list of buckets in S3.
@@ -37,7 +42,7 @@ class S3Data:
             MaxKeys=100,
             FetchOwner=True,
         )
-        return json.dumps(response['Contents'], indent=2, default=str)
+        return response['Contents']
 
     def object_post(self, object_path, object_name, s3_bucket):
         with open(object_path, 'rb') as data:
@@ -60,8 +65,37 @@ class S3Data:
             )
         return response
 
-    def object_delete(self):
-        pass
+    # single bucket deleted delete
+    def bucket_delete(self, bucket_name):
+        try:
+            self.resource.Bucket(bucket_name).delete()
+        except Exception as e:
+            return f"Bucket Name: {bucket_name} - Failed to delete due to {e}"
+        return f"Bucket Name: {bucket_name} - successfuly deleted"
+
+    # multiple delete 
+    def objects_delete(self):
+        response = self.client.bucket.delete_objects(
+            Delete={
+                'Objects': [
+                    {
+                        'Key': 'string',
+                        'VersionId': 'string'
+                    },
+                ],
+                'Quiet': True|False
+            },
+            MFA='string',
+            RequestPayer='requester',
+            BypassGovernanceRetention=True|False,
+            ExpectedBucketOwner='string'
+        )
+        return response
+
+    def object_delete(self, bucket_name, object_name):
+        del_obj = self.resource.Object(bucket_name, object_name)
+        response = del_obj.delete()
+        return response
 
 
 class S3Control:
