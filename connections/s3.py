@@ -1,6 +1,6 @@
 import boto3
 import json
-
+import datetime
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
 
@@ -38,6 +38,30 @@ class S3Data:
             FetchOwner=True,
         )
         return json.dumps(response['Contents'], indent=2, default=str)
+
+    def object_post(self, object_path, object_name, s3_bucket):
+        with open(object_path, 'rb') as data:
+            print('uploading')
+            self.client.upload_fileobj(data, s3_bucket, object_name)
+            print('completed!')
+
+    def object_put(self, file):
+        response = self.client.put_object(
+                ACL='bucket-owner-full-control',
+                Body=file,
+                Bucket='exploration-bucket',
+                ContentDisposition='filename-parm',
+                ContentEncoding='csv',
+                ContentLanguage='en',
+                ContentLength=len(file),
+                Expires=datetime(2022, 1, 1),
+                GrantFullControl='string',
+                Key='string',
+            )
+        return response
+
+    def object_delete(self):
+        pass
 
 
 class S3Control:

@@ -1,6 +1,22 @@
-from connections.s3 import S3Control
+from connections.s3 import S3Data
+import pathlib
 
-print(S3Control().bucket_get())
+s3 = S3Data()
 
-if __name__ == '__main__':
-    print('main')
+filepath = pathlib.Path.home() / 'Downloads' / 'orders.csv'
+object_name = 'Customer_Orders_2020'
+buckets = s3.buckets_list()
+
+
+def s3_object_upload_demo(s3, filepath, object_name, s3_bucket):
+    # Client selects bucket
+    selected_bucket = buckets[0]
+    # Client then uploads object to desired s3 bucket
+    try:
+        s3.object_post(filepath, object_name, selected_bucket)
+    except Exception as e:
+        return f"Failed due to {e}"
+    return f"Successful upload of {object_name} to {selected_bucket}"
+
+
+print(s3_object_upload_demo(s3, filepath, object_name, buckets))
