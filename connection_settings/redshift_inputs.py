@@ -1,16 +1,18 @@
 from dataclasses import dataclass
 from typing import Optional
 
+
 @dataclass
 class RedShiftInputs:
-    ClusterIdentifier: str
-    Database: str
-    DbUser: str
-    MaxResults: int
-    Table=str
+    clusterIdentifier: str
+    database: str
+    dbUser: str
+    maxResults: int
+    table: str
+
 
 @dataclass
 class RedShiftSQL(RedShiftInputs):
-    Sql: str
-    StatementName = Optional[str]
-    WithEvent=Optional[bool]
+    sql: str
+    statementName: Optional[str]
+    withEvent: Optional[bool]

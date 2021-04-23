@@ -4,7 +4,7 @@ import datetime
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
 
-class S3Data:
+class S3Client:
     """ A class that represents the S3 api connection.
     """
     def __init__(self):
@@ -13,6 +13,9 @@ class S3Data:
                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=AWS_SECRET_KEY,
         )
+
+    def __repr__(self):
+        pass
 
     def buckets_list(self):
         """ A method that returns the list of buckets in S3.
@@ -107,14 +110,14 @@ class S3Resource:
         )
 
     def __repr__(self):
-        return f"S3Resource Class with properties: {dir(self)}"
+        return f"S3Resource Class with properties: {dir(self)[27:]}"
 
     def object_delete(self, bucket_name, object_name):
         del_obj = self.resource.Object(bucket_name, object_name)
         response = del_obj.delete()
         return response
 
-    # single bucket deleted delete
+    # single bucket delete
     def bucket_delete(self, bucket_name):
         try:
             self.resource.Bucket(bucket_name).delete()
