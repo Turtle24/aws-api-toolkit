@@ -8,3 +8,4 @@ aiofiles
 requests
 boto3
 awscli
+black
