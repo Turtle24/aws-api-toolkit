@@ -1,10 +1,10 @@
 import boto3
-import json
 
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
+
 class ConnectionHandler:
-    
+
     @staticmethod
     def rds_connection():
         return boto3.client(
@@ -12,7 +12,6 @@ class ConnectionHandler:
                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=AWS_SECRET_KEY,
                 )
-        
 
     @staticmethod
     def s3_connection():
@@ -21,7 +20,6 @@ class ConnectionHandler:
                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=AWS_SECRET_KEY,
                 )
-        
 
     @staticmethod
     def redshift_connection():
@@ -30,4 +28,3 @@ class ConnectionHandler:
                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=AWS_SECRET_KEY,
                 )
-        

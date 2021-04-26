@@ -1,7 +1,9 @@
+import datetime
+
 s3_batch_job_create = {
-    AccountId: "string",
-    ConfirmationRequired: True | False,
-    Operation: {
+    'AccountId': "string",
+    'ConfirmationRequired': True | False,
+    'Operation': {
         "LambdaInvoke": {"FunctionArn": "string"},
         "S3PutObjectCopy": {
             "TargetResource": "string",
@@ -106,15 +108,15 @@ s3_batch_job_create = {
             },
         },
     },
-    Report: {
+    'Report': {
         "Bucket": "string",
         "Format": "Report_CSV_20180820",
         "Enabled": True | False,
         "Prefix": "string",
         "ReportScope": "AllTasks" | "FailedTasksOnly",
     },
-    ClientRequestToken: "string",
-    Manifest: {
+    'ClientRequestToken': "string",
+    'Manifest': {
         "Spec": {
             "Format": "S3BatchOperations_CSV_20180820"
             | "S3InventoryReport_CSV_20161130",
@@ -128,10 +130,10 @@ s3_batch_job_create = {
             "ETag": "string",
         },
     },
-    Description: "string",
-    Priority: 123,
-    RoleArn: "string",
-    Tags: [
+    'Description': "string",
+    'Priority': 123,
+    'RoleArn': "string",
+    'Tags': [
         {"Key": "string", "Value": "string"},
     ],
 }

@@ -1,11 +1,5 @@
-from connections.s3 import S3Client, S3Resource
-import pathlib
+import json
 
-s3 = S3Client()
+from parameters.sagemaker_params import create_algorithm_params
 
-filepath = pathlib.Path.home() / 'Downloads' / 'orders.csv'
-object_name = 'Customer_Orders_2020'
-
-resource = S3Resource()
-
-print(resource)
+print(json.dumps(create_algorithm_params, indent=4))

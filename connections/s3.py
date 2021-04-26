@@ -3,8 +3,6 @@ import json
 import datetime
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
-from parameters import s3_params
-
 
 class S3Client:
     """A class that represents the S3 api connection."""
@@ -17,7 +15,7 @@ class S3Client:
         )
 
     def __repr__(self):
-        pass
+        return f"S3Resource Class with properties: {dir(self)[27:]}"
 
     def buckets_list(self):
         """A method that returns the list of buckets in S3.
@@ -152,5 +150,6 @@ class S3BatchOperations(S3Control):
         return response
 
     def job_create(self):
-        response = self.client.create_job(s3_params)
+        response = self.client.create_job(None)
         return response
+
