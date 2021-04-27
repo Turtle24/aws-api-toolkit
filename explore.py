@@ -1,5 +1,10 @@
-import json
+from parameters.s3_params import CreateBucket
+from connections.s3 import S3Client
 
-from parameters.sagemaker_params import create_algorithm_params
+create_bucket = CreateBucket('test')
+print(create_bucket)
 
-print(json.dumps(create_algorithm_params, indent=4))
+s3 = S3Client()
+resp = s3.create_bucket(Bucket=create_bucket.Bucket)
+
+print(resp)

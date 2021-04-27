@@ -17,6 +17,10 @@ class S3Client:
     def __repr__(self):
         return f"S3Resource Class with properties: {dir(self)[27:]}"
 
+    def create_bucket(self, params):
+        response = self.client.create_bucket(params)
+        return response
+
     def buckets_list(self):
         """A method that returns the list of buckets in S3.
 
