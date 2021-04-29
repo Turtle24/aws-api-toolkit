@@ -14,7 +14,7 @@ class SageMakerClient:
         )
 
     def __repr__(self):
-        return f"SageMakerClient Class with properties: {dir(self)[27:]}"
+        return f"SageMakerClient Class with properties: {self.__class__.__mro__}"
 
     def create_algorithm(self):
         response = self.client.create_algorithm(create_algorithm_params)

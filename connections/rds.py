@@ -14,6 +14,9 @@ class RDSClient:
             aws_secret_access_key=AWS_SECRET_KEY,
         )
 
+    def __repr__(self):
+        return f"RDSClient Class with properties: {self.__class__.__mro__}"
+
     def account_attributes(self):
         """A method that lists the account attributes of the RDS client.
 
@@ -40,6 +43,9 @@ class RDSData:
             aws_access_key_id=AWS_ACCESS_KEY_ID,
             aws_secret_access_key=AWS_SECRET_KEY,
         )
+
+    def __repr__(self):
+        return f"RDSData Class with properties: {self.__class__.__mro__}"
 
     def sql_statement(self):
         response = self.client.execute_statement(

@@ -15,7 +15,7 @@ class S3Client:
         )
 
     def __repr__(self):
-        return f"S3Resource Class with properties: {dir(self)[27:]}"
+        return f"S3Client Class with properties: {self.__class__.__mro__}"
 
     def create_bucket(self, params):
         response = self.client.create_bucket(params)
@@ -93,6 +93,9 @@ class S3Control:
             aws_secret_access_key=AWS_SECRET_KEY,
         )
 
+    def __repr__(self):
+        return f"S3Control Class with properties: {self.__class__.__mro__}"
+
     def bucket_get(self):
         response = self.client.get_bucket(
             AccountId="937543116659", Bucket="exploration-bucket"
@@ -111,7 +114,7 @@ class S3Resource:
         )
 
     def __repr__(self):
-        return f"S3Resource Class with properties: {dir(self)[27:]}"
+        return f"S3Resource Class with properties: {self.__class__.__mro__}"
 
     def object_delete(self, bucket_name, object_name):
         del_obj = self.resource.Object(bucket_name, object_name)
@@ -129,6 +132,9 @@ class S3Resource:
 
 class S3BatchOperations(S3Control):
     """Class representing S3 Batch Operations. For example jobs."""
+
+    def __repr__(self):
+        return f"S3Client Child Class with properties: {self.__class__.__mro__}"
 
     def jobs_list(self):
         response = self.client.list_jobs(

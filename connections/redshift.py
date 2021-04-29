@@ -14,6 +14,9 @@ class RedShiftData:
             aws_secret_access_key=AWS_SECRET_KEY,
         )
 
+    def __repr__(self):
+        return f"RedShiftData Class with properties: {self.__class__.__mro__}"
+
     def list_tables(self):
         """A method that list the tables in the redshift database.
 
