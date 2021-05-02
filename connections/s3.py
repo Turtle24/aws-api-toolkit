@@ -83,6 +83,29 @@ class S3Client:
         return response
 
 
+class S3Bucket:
+
+    def __init__(self, name='exploration-bucket'):
+        self.s3 = boto3.resource('s3')
+        self.bucket = self.s3.Bucket(name)
+
+    # Need to look further into this create bucket method*
+    def create_bucket(self):
+        response = self.bucket.create(
+            ACL='public-read-write',
+            CreateBucketConfiguration={
+                'LocationConstraint': 'us-east-2'
+            },
+        )
+        return response
+
+    def delete_bucket(self):
+        self.bucket.delete(
+            ExpectedBucketOwner='string'
+            )
+        return f"{self.bucket} deleted!"
+
+
 class S3Control:
     """AWS S3 Control provides access to Amazon S3 control plane actions."""
 
