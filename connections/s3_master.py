@@ -1,32 +1,33 @@
 import boto3
-import json
 import datetime
+import json
+
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
 
 class S3EndPoints:
 
     def __init__(self):
-        self.client = boto3.client(
+        self.s3_client = boto3.client(
             "s3",
             aws_access_key_id=AWS_ACCESS_KEY_ID,
             aws_secret_access_key=AWS_SECRET_KEY,
         )
-        self.client = boto3.client(
+        self.s3_control_client = boto3.client(
             "s3control",
             aws_access_key_id=AWS_ACCESS_KEY_ID,
             aws_secret_access_key=AWS_SECRET_KEY,
         )
-        self.s3 = boto3.resource('s3')
+        self.resource = boto3.resource('s3')
 
     def __repr__(self):
-        return f"S3EndPoints Class with properties: {self.__class__.__mro__}"
+        return f"S3EndPoints Class: {self.__class__.__name__} with {dir(self)}"
 
 
 class S3BucketOperations(S3EndPoints):
 
     def create_bucket(self, params):
-        response = self.client.create_bucket(params)
+        response = self.s3_client.create_bucket(params)
         return response
 
     def buckets_list(self):
@@ -35,7 +36,7 @@ class S3BucketOperations(S3EndPoints):
         Returns:
             list: A list of all the bucket names are returned.
         """
-        response = self.client.list_buckets()
+        response = self.s3_client.list_buckets()
         return [dicts["Name"] for dicts in response["Buckets"]]
 
     def delete_bucket(self, name):
@@ -51,11 +52,11 @@ class S3ObjectOperations(S3EndPoints):
     def object_post(self, object_path, object_name, s3_bucket):
         with open(object_path, "rb") as data:
             print("uploading")
-            self.client.upload_fileobj(data, s3_bucket, object_name)
+            self.s3_client.upload_fileobj(data, s3_bucket, object_name)
             print("completed!")
 
     def object_put(self, file):
-        response = self.client.put_object(
+        response = self.s3_client.put_object(
             ACL="bucket-owner-full-control",
             Body=file,
             Bucket="exploration-bucket",
@@ -71,7 +72,7 @@ class S3ObjectOperations(S3EndPoints):
 
     # multiple delete
     def objects_delete(self):
-        response = self.client.bucket.delete_objects(
+        response = self.s3_client.bucket.delete_objects(
             Delete={
                 "Objects": [
                     {"Key": "string", "VersionId": "string"},
@@ -92,10 +93,10 @@ class S3ObjectOperations(S3EndPoints):
         Returns:
             json: A json string is returned representing the objects in the S3 bucket.
         """
-        response = self.client.list_objects_v2(
+        response = self.s3_client.list_objects_v2(
             Bucket="exploration-bucket",
             EncodingType="url",
             MaxKeys=100,
             FetchOwner=True,
         )
-        return response["Contents"]
+        return json.dumps(response["Contents"], indent=4, default=str)

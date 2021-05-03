@@ -1,4 +1,5 @@
-from connections.s3 import S3Bucket
+from connections.s3_master import S3ObjectOperations
 
-test_bucket = S3Bucket()
-print(test_bucket.create_bucket())
+s3 = S3ObjectOperations()
+
+print(s3)
