@@ -1,5 +1,5 @@
 import boto3
-import json
+import datetime
 from parameters.sagemaker_params import create_algorithm_params
 
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
@@ -18,4 +18,27 @@ class SageMakerClient:
 
     def create_algorithm(self):
         response = self.client.create_algorithm(create_algorithm_params)
+        return response
+
+    def create_model(self, params):
+        response = self.client.create_model(
+            params)
+        return response
+
+    def describe_model(self):
+        response = self.client.describe_model(
+            ModelName='string'
+        )
+        return response
+
+    def list_models(self):
+        response = self.client.list_models(
+            SortBy='Name'|'CreationTime',
+            SortOrder='Ascending'|'Descending',
+            NextToken='string',
+            MaxResults=123,
+            NameContains='string',
+            CreationTimeBefore=datetime(2015, 1, 1),
+            CreationTimeAfter=datetime(2015, 1, 1)
+        )
         return response

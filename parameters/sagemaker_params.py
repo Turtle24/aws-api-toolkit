@@ -372,3 +372,67 @@ create_algorithm_params = {
     "CertifyForMarketplace": [True, False],
     "Tags": {"Key": "string", "Value": "string"},
 }
+
+
+create_model_params = {
+    'ModelName': 'string',
+    'PrimaryContainer': {
+        'ContainerHostname': 'string',
+        'Image': 'string',
+        'ImageConfig': {
+            'RepositoryAccessMode': ['Platform', 'Vpc'],
+            'RepositoryAuthConfig': {
+                'RepositoryCredentialsProviderArn': 'string'
+            }
+        },
+        'Mode': ['SingleModel', 'MultiModel'],
+        'ModelDataUrl': 'string',
+        'Environment': {
+            'string': 'string'
+        },
+        'ModelPackageName': 'string',
+        'MultiModelConfig': {
+            'ModelCacheSetting': ['Enabled', 'Disabled']
+        }
+    },
+    'Containers': [
+        {
+            'ContainerHostname': 'string',
+            'Image': 'string',
+            'ImageConfig': {
+                'RepositoryAccessMode': ['Platform', 'Vpc'],
+                'RepositoryAuthConfig': {
+                    'RepositoryCredentialsProviderArn': 'string'
+                }
+            },
+            'Mode': ['SingleModel', 'MultiModel'],
+            'ModelDataUrl': 'string',
+            'Environment': {
+                'string': 'string'
+            },
+            'ModelPackageName': 'string',
+            'MultiModelConfig': {
+                'ModelCacheSetting': ['Enabled', 'Disabled']
+            }
+        },
+    ],
+    'InferenceExecutionConfig': {
+        'Mode': ['Serial', 'Direct']
+    },
+    'ExecutionRoleArn': 'string',
+    'Tags': [
+        {
+            'Key': 'string',
+            'Value': 'string'
+        },
+    ],
+    'VpcConfig': {
+        'SecurityGroupIds': [
+            'string',
+        ],
+        'Subnets': [
+            'string',
+        ]
+    },
+    'EnableNetworkIsolation': [True, False]
+}
