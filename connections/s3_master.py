@@ -99,4 +99,4 @@ class S3ObjectOperations(S3EndPoints):
             MaxKeys=100,
             FetchOwner=True,
         )
-        return json.dumps(response["Contents"], indent=4, default=str)
+        return json.dumps(response["Contents"][0], indent=4, default=str)

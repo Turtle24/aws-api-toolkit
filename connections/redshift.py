@@ -17,6 +17,30 @@ class RedShiftData:
     def __repr__(self):
         return f"RedShiftData Class with properties: {self.__class__.__mro__}"
 
+    def list_databases(self):
+        response = self.client.list_databases(
+            ClusterIdentifier='string',
+            Database='string',
+            DbUser='string',
+            MaxResults=123,
+            NextToken='string',
+            SecretArn='string'
+        )
+        return response
+
+    def list_schemas(self):
+        response = self.client.list_schemas(
+            ClusterIdentifier='string',
+            ConnectedDatabase='string',
+            Database='string',
+            DbUser='string',
+            MaxResults=123,
+            NextToken='string',
+            SchemaPattern='string',
+            SecretArn='string'
+        )
+        return response
+
     def list_tables(self):
         """A method that list the tables in the redshift database.
 
@@ -48,7 +72,7 @@ class RedShiftData:
         )
         return [dicts["name"] for dicts in response["ColumnList"]]
 
-    def execute_query(self):
+    def execute_statement(self):
         """A method that executes a query in the redshift query editor.
         Can be used to create tables all query data.
 
@@ -64,3 +88,32 @@ class RedShiftData:
             WithEvent=False,
         )
         return json.dumps(response, indent=2, default=str)
+
+    def describe_statement(self):
+        response = self.client.describe_statement(
+            Id='string'
+        )
+        return response
+
+    def cancel_statement(self):
+        response = self.client.cancel_statement(
+            Id='string'
+        )
+        return response
+
+    def list_statements(self):
+        response = self.client.list_statements(
+            MaxResults=123,
+            NextToken='string',
+            RoleLevel=True|False,
+            StatementName='string',
+            Status='SUBMITTED'|'PICKED'|'STARTED'|'FINISHED'|'ABORTED'|'FAILED'|'ALL'
+        )
+        return response
+
+    def get_statement_result(self):
+        response = self.client.get_statement_result(
+            Id='string',
+            NextToken='string'
+        )
+        return response
