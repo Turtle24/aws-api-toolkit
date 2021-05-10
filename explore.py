@@ -1,5 +1,5 @@
-from connections.s3_master import S3ObjectOperations
+from connections.redshift import RedShiftData
 
-s3 = S3ObjectOperations()
+red = RedShiftData()
 
-print(s3.objects_list())
+print(red.list_databases()())

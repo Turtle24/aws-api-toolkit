@@ -42,3 +42,28 @@ class SageMakerClient:
             CreationTimeAfter=datetime(2015, 1, 1)
         )
         return response
+
+    def describe_feature_group(self):
+        response = self.client.describe_feature_group(
+            FeatureGroupName='string',
+            NextToken='string'
+        )
+        return response
+
+    def describe_pipeline(self):
+        response = self.client.describe_pipeline(
+            PipelineName='string'
+        )
+        return response
+
+    def describe_algorithm(self):
+        response = self.client.describe_algorithm(
+            AlgorithmName='string'
+        )
+        return response
+
+    def describe_endpoint(self):
+        response = self.client.describe_endpoint(
+            EndpointName='string'
+        )
+        return response
