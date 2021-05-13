@@ -21,14 +21,17 @@ class S3EndPoints:
         self.resource = boto3.resource("s3")
 
     def __repr__(self):
-        return f"S3EndPoints Class: {self.__class__.__name__} with {dir(self)}"
+        return f"Class: {self.__class__.__name__}"
 
 
 class S3BucketOperations(S3EndPoints):
 
-    def __init__(self, name):
+    def __init__(self, bucket_name):
         super().__init__()
-        self.bucket = self.resource.Bucket(name)
+        self.bucket = self.resource.Bucket(bucket_name)
+
+    def __str__(self) -> str:
+        return super().__str__() + f", Bucket name: {self.bucket.name}"
 
     def bucket_create(self) -> dict:
         response = self.bucket.create(
@@ -51,7 +54,12 @@ class S3BucketOperations(S3EndPoints):
         return f"{self.bucket} deleted!"
 
 
-class S3ObjectOperations(S3EndPoints):
+class S3ObjectOperations(S3BucketOperations):
+
+    def __init__(self, bucket_name):
+        super().__init__(bucket_name)
+        self.bucket_name = bucket_name
+
     def object_post(self, object_path, object_name, s3_bucket):
         with open(object_path, "rb") as data:
             print("uploading")
