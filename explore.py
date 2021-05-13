@@ -1,5 +1,6 @@
-from connections.redshift import RedShiftData
+from connections.s3_master import S3BucketOperations
 
-red = RedShiftData()
 
-print(red.list_databases()())
+s3 = S3BucketOperations('vectest-bucket')
+
+print(s3.buckets_list())

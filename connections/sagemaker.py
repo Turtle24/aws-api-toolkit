@@ -21,49 +21,39 @@ class SageMakerClient:
         return response
 
     def create_model(self, params):
-        response = self.client.create_model(
-            params)
+        response = self.client.create_model(params)
         return response
 
     def describe_model(self):
-        response = self.client.describe_model(
-            ModelName='string'
-        )
+        response = self.client.describe_model(ModelName="string")
         return response
 
     def list_models(self):
         response = self.client.list_models(
-            SortBy='Name'|'CreationTime',
-            SortOrder='Ascending'|'Descending',
-            NextToken='string',
+            SortBy="Name" | "CreationTime",
+            SortOrder="Ascending" | "Descending",
+            NextToken="string",
             MaxResults=123,
-            NameContains='string',
+            NameContains="string",
             CreationTimeBefore=datetime(2015, 1, 1),
-            CreationTimeAfter=datetime(2015, 1, 1)
+            CreationTimeAfter=datetime(2015, 1, 1),
         )
         return response
 
     def describe_feature_group(self):
         response = self.client.describe_feature_group(
-            FeatureGroupName='string',
-            NextToken='string'
+            FeatureGroupName="string", NextToken="string"
         )
         return response
 
     def describe_pipeline(self):
-        response = self.client.describe_pipeline(
-            PipelineName='string'
-        )
+        response = self.client.describe_pipeline(PipelineName="string")
         return response
 
     def describe_algorithm(self):
-        response = self.client.describe_algorithm(
-            AlgorithmName='string'
-        )
+        response = self.client.describe_algorithm(AlgorithmName="string")
         return response
 
     def describe_endpoint(self):
-        response = self.client.describe_endpoint(
-            EndpointName='string'
-        )
+        response = self.client.describe_endpoint(EndpointName="string")
         return response

@@ -2,11 +2,11 @@ import boto3
 import datetime
 import json
 
+from parameters.s3_params import create_bucket_params as bucket_params
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
 
 class S3EndPoints:
-
     def __init__(self):
         self.s3_client = boto3.client(
             "s3",
@@ -18,7 +18,7 @@ class S3EndPoints:
             aws_access_key_id=AWS_ACCESS_KEY_ID,
             aws_secret_access_key=AWS_SECRET_KEY,
         )
-        self.resource = boto3.resource('s3')
+        self.resource = boto3.resource("s3")
 
     def __repr__(self):
         return f"S3EndPoints Class: {self.__class__.__name__} with {dir(self)}"
@@ -26,11 +26,18 @@ class S3EndPoints:
 
 class S3BucketOperations(S3EndPoints):
 
-    def create_bucket(self, params):
-        response = self.s3_client.create_bucket(params)
-        return response
+    def __init__(self, name):
+        super().__init__()
+        self.bucket = self.resource.Bucket(name)
 
-    def buckets_list(self):
+    def bucket_create(self) -> dict:
+        response = self.bucket.create(
+            ACL=bucket_params["ACL"][0],
+            CreateBucketConfiguration=bucket_params["CreateBucketConfiguration"],
+        )
+        return json.dumps(response, indent=4)
+
+    def buckets_list(self) -> list:
         """A method that returns the list of buckets in S3.
 
         Returns:
@@ -39,16 +46,12 @@ class S3BucketOperations(S3EndPoints):
         response = self.s3_client.list_buckets()
         return [dicts["Name"] for dicts in response["Buckets"]]
 
-    def delete_bucket(self, name):
-        self.bucket = self.s3.Bucket(name)
-        self.bucket.delete(
-            ExpectedBucketOwner='string'
-            )
+    def delete_bucket(self) -> str:
+        self.bucket.delete()
         return f"{self.bucket} deleted!"
 
 
 class S3ObjectOperations(S3EndPoints):
-
     def object_post(self, object_path, object_name, s3_bucket):
         with open(object_path, "rb") as data:
             print("uploading")
