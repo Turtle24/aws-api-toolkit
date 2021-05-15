@@ -1,5 +1,5 @@
 import boto3
-import json
+import pprint
 
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_KEY
 
@@ -17,6 +17,11 @@ class RDSClient:
     def __repr__(self):
         return f"RDSClient Class with properties: {self.__class__.__mro__}"
 
+    @staticmethod
+    def pp_print(response):
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(response)
+
     def account_attributes(self):
         """A method that lists the account attributes of the RDS client.
 
@@ -25,7 +30,7 @@ class RDSClient:
         """
 
         response = self.client.describe_account_attributes()
-        return json.dumps(response, indent=2, default=str)
+        return response
 
     def db_instances(self):
         response = self.client.describe_db_instances(

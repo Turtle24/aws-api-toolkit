@@ -26,15 +26,15 @@ class S3EndPoints:
 
 class S3BucketOperations(S3EndPoints):
 
-    def __init__(self, bucket_name):
+    def __init__(self):
         super().__init__()
-        self.bucket = self.resource.Bucket(bucket_name)
 
     def __str__(self) -> str:
         return super().__str__() + f", Bucket name: {self.bucket.name}"
 
-    def bucket_create(self) -> dict:
-        response = self.bucket.create(
+    def bucket_create(self, bucket_name) -> dict:
+        bucket = self.resource.Bucket(bucket_name)
+        response = bucket.create(
             ACL=bucket_params["ACL"][0],
             CreateBucketConfiguration=bucket_params["CreateBucketConfiguration"],
         )
@@ -49,16 +49,16 @@ class S3BucketOperations(S3EndPoints):
         response = self.s3_client.list_buckets()
         return [dicts["Name"] for dicts in response["Buckets"]]
 
-    def delete_bucket(self) -> str:
-        self.bucket.delete()
-        return f"{self.bucket} deleted!"
+    def delete_bucket(self, bucket_name) -> str:
+        bucket = self.resource.Bucket(bucket_name)
+        bucket.delete()
+        return f"{bucket} deleted!"
 
 
 class S3ObjectOperations(S3BucketOperations):
 
-    def __init__(self, bucket_name):
-        super().__init__(bucket_name)
-        self.bucket_name = bucket_name
+    def __init__(self):
+        super().__init__()
 
     def object_post(self, object_path, object_name, s3_bucket):
         with open(object_path, "rb") as data:
